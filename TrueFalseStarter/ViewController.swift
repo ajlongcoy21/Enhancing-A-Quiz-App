@@ -7,30 +7,56 @@
 //
 //
 
+/*--------------------------------------------------------------------------
+ Import kits and toolboxes
+ --------------------------------------------------------------------------*/
+
 import UIKit
 import GameKit
 import AudioToolbox
 
-class ViewController: UIViewController {
+/*--------------------------------------------------------------------------
+ Class ViewController
+ 
+ Controls the view part of the application
+ --------------------------------------------------------------------------*/
+
+class ViewController: UIViewController
+{
+    /*--------------------------------------------------------------------------
+     Define local variables that are used to control the trivia game display
+    --------------------------------------------------------------------------*/
     
-    var newGame = TriviaGame()
-    var questionNumber: Int = 0
-    var questionOptions: [String] = []
+    var newGame = TriviaGame()                     // Create a TriviaGame instance
+    var questionNumber: Int = 0                    // QuestionNumber - used to identify which question and answer pair needs to be displayed
+    var questionOptions: [String] = []             // questionOptions - An array of strings used to show the answer options for each question
+    
+    /*--------------------------------------------------------------------------
+     Define local variables that are used for sound throughout the game
+    --------------------------------------------------------------------------*/
     
     var gameSound: SystemSoundID = 0
     var correctAnswerSound: SystemSoundID = 0
     var wrongAnswerSound: SystemSoundID = 0
     
-    @IBOutlet weak var questionField: UILabel!
-    @IBOutlet weak var Option1Button: UIButton!
-    @IBOutlet weak var Option2Button: UIButton!
-    @IBOutlet weak var Option3Button: UIButton!
-    @IBOutlet weak var Option4Button: UIButton!
-    @IBOutlet weak var playAgainButton: UIButton!
+    /*--------------------------------------------------------------------------
+     Create a connection between the screen labels and buttons and the 
+     viewController.
+    --------------------------------------------------------------------------*/
+    
+    @IBOutlet weak var questionField: UILabel!       //Label to display the question
+    @IBOutlet weak var answerField: UILabel!         //Label to display if the answer was correct or not
+    @IBOutlet weak var Option1Button: UIButton!      //Button to display answer option 1 to the question
+    @IBOutlet weak var Option2Button: UIButton!      //Button to display answer option 2 to the question
+    @IBOutlet weak var Option3Button: UIButton!      //Button to display answer option 3 to the question
+    @IBOutlet weak var Option4Button: UIButton!      //Button to display answer option 4 to the question
+    @IBOutlet weak var playAgainButton: UIButton!    //Button to determine if the player wants to play again
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        // Play game starting sound
         loadGameStartSound()
         
         // Start game
@@ -47,32 +73,48 @@ class ViewController: UIViewController {
     func displayQuestion()
     {
 
-        questionNumber = newGame.getQuestionNumber()
+        questionNumber = newGame.getQuestionNumber()  //Get a question number from the trivia game
         
-        questionField.text = newGame.getQuestion(questionNumber: questionNumber)
+        answerField.isHidden = true  // Hide the answer field until an answer is selected
         
-        questionOptions = newGame.getOptions(questionNumber: questionNumber)
+        questionField.text = newGame.getQuestion(questionNumber: questionNumber)  // Display the question of the triviaGame
+        
+        questionOptions = newGame.getOptions(questionNumber: questionNumber)  // Obtain the answer options related to the question
+        
+        // Setup Buttons attributes to the starting condition for the question
+        
+        Option1Button.setTitleColor(UIColor.white, for: UIControlState.normal)
+        Option2Button.setTitleColor(UIColor.white, for: UIControlState.normal)
+        Option3Button.setTitleColor(UIColor.white, for: UIControlState.normal)
+        Option4Button.setTitleColor(UIColor.white, for: UIControlState.normal)
+        
+        // Display the answer options in the text field of the buttons
         
         Option1Button.setTitle(questionOptions[0], for: UIControlState.normal)
         Option2Button.setTitle(questionOptions[1], for: UIControlState.normal)
         Option3Button.setTitle(questionOptions[2], for: UIControlState.normal)
         Option4Button.setTitle(questionOptions[3], for: UIControlState.normal)
         
+        // Hide the play again button until the game is finished
+        
         playAgainButton.isHidden = true
-        
-        
     }
     
     func displayScore()
     {
-        // Hide the answer buttons
+        // Hide the answer buttons and field
+        
         Option1Button.isHidden = true
         Option2Button.isHidden = true
         Option3Button.isHidden = true
         Option4Button.isHidden = true
+        answerField.isHidden = true
         
         // Display play again button
+        
         playAgainButton.isHidden = false
+        
+        // Display the score of the player
         
         questionField.text = "Way to go!\nYou got \(newGame.getCorrectAnswers()) out of \(newGame.getQuestionsPerRound()) correct!"
         
@@ -81,61 +123,194 @@ class ViewController: UIViewController {
     @IBAction func checkAnswer(_ sender: UIButton)
     {
         // Increment the questions asked counter
+        
         newGame.incrementQuestionsAsked()
+        
+        // Check which button option was clicked
         
         switch sender
         {
-        case Option1Button:
+        case Option1Button: // Player selected answer 1
+            
+            // If answer is correct 
+            
             if newGame.getAnswer(questionNumber: questionNumber) == "1"
             {
+                // Increase correct answer count by 1
+                
                 newGame.incrementCorrectAnswer()
-                questionField.text = "Correct!"
+                
+                // Display that the answer the player chose is correct
+                
+                answerField.isHidden = false
+                answerField.text = "Correct!"
+                answerField.textColor = UIColor.cyan
+                
+                // Play correct sound noise
+                
                 playCorrectAnswerSound()
+                
+                // Make less visible the other options the user did not choose
+                
+                Option2Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option3Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option4Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+
             }
             else
             {
+                // Play wrong sound noise
+                
                 playWrongAnswerSound()
-                questionField.text = "Sorry, wrong answer!"
+                
+                // Display that the answer the player chose is incorrect
+                
+                answerField.isHidden = false
+                answerField.text = "Sorry, that's not it."
+                answerField.textColor = UIColor.orange
+                
+                // Make less visible the other options the user did not choose
+                
+                Option2Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option3Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option4Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
             }
-        case Option2Button:
+        case Option2Button: // Player selected answer 2
+            
+            // If answer is correct
+            
             if newGame.getAnswer(questionNumber: questionNumber) == "2"
             {
+                // Increase correct answer count by 1
+                
                 newGame.incrementCorrectAnswer()
-                questionField.text = "Correct!"
+                
+                // Display that the answer the player chose is correct
+                
+                answerField.isHidden = false
+                answerField.text = "Correct!"
+                answerField.textColor = UIColor.cyan
+                
+                // Play correct answer sound
+                
                 playCorrectAnswerSound()
+                
+                // Make less visible the other options the user did not choose
+                
+                Option1Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option3Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option4Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
             }
             else
             {
+                // Play wrong answer sound
+                
                 playWrongAnswerSound()
-                questionField.text = "Sorry, wrong answer!"
+                
+                // Display that the answer the player chose is incorrect
+                
+                answerField.isHidden = false
+                answerField.text = "Sorry, that's not it."
+                answerField.textColor = UIColor.orange
+                
+                // Make less visible the other options the user did not choose
+                
+                Option1Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option3Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option4Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
             }
-        case Option3Button:
+        case Option3Button: // Player selected answer 2
+            
+            // If answer is correct
             if newGame.getAnswer(questionNumber: questionNumber) == "3"
             {
+                // Increase correct answer count by 1
                 newGame.incrementCorrectAnswer()
-                questionField.text = "Correct!"
+                
+                // Display that the answer the player chose is correct
+                
+                answerField.isHidden = false
+                answerField.text = "Correct!"
+                answerField.textColor = UIColor.cyan
+                
+                // Play correct answer sound
+                
                 playCorrectAnswerSound()
+                
+                // Make less visible the other options the user did not choose
+                
+                Option1Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option2Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option4Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
             }
             else
             {
+                // Play incorrect answer sound
+                
                 playWrongAnswerSound()
-                questionField.text = "Sorry, wrong answer!"
+                
+                // Display that the answer the player chose is incorrect
+                
+                answerField.isHidden = false
+                answerField.text = "Sorry, that's not it."
+                answerField.textColor = UIColor.orange
+                
+                // Make less visible the other options the user did not choose
+                
+                Option1Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option2Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option4Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
             }
-        case Option4Button:
+        case Option4Button: // Player selected answer 2
+            
+            // If answer is correct
             if newGame.getAnswer(questionNumber: questionNumber) == "4"
             {
+                // Increase correct answer count by 1
+                
                 newGame.incrementCorrectAnswer()
-                questionField.text = "Correct!"
+                
+                // Display that the answer the player chose is correct
+                
+                answerField.isHidden = false
+                answerField.text = "Correct!"
+                answerField.textColor = UIColor.cyan
+                
+                // Play correct answer sound
+                
                 playCorrectAnswerSound()
+                
+                // Make less visible the other options the user did not choose
+                
+                Option1Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option2Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option3Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
             }
             else
             {
+                // Play incorrect answer sound
+                
                 playWrongAnswerSound()
-                questionField.text = "Sorry, wrong answer!"
+                
+                // Display that the answer the player chose is incorrect
+                
+                answerField.isHidden = false
+                answerField.text = "Sorry, that's not it."
+                answerField.textColor = UIColor.orange
+                
+                // Make less visible the other options the user did not choose
+                
+                Option1Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option2Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option3Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
             }
+            
         default:
+            
             break
         }
+        
+        // Delay the trivia game to allow the player to read the changes
         
         loadNextRoundWithDelay(seconds: 2)
     }
@@ -145,11 +320,13 @@ class ViewController: UIViewController {
         if newGame.getQuestionsAsked() == newGame.getQuestionsPerRound()
         {
             // Game is over
+            
             displayScore()
         }
         else
         {
             // Continue game
+            
             displayQuestion()
         }
     }
@@ -157,6 +334,7 @@ class ViewController: UIViewController {
     @IBAction func playAgain()
     {
         // Show the answer buttons
+        
         Option1Button.isHidden = false
         Option2Button.isHidden = false
         Option3Button.isHidden = false
