@@ -16,10 +16,10 @@ class ViewController: UIViewController {
     var newGame = TriviaGame()
     var questionNumber: Int = 0
     var questionOptions: [String] = []
-    var alreadyAskedQuestion: Bool = true
-    var alreadyAskedQuestionArray: [Int] = []
     
     var gameSound: SystemSoundID = 0
+    var correctAnswerSound: SystemSoundID = 0
+    var wrongAnswerSound: SystemSoundID = 0
     
     @IBOutlet weak var questionField: UILabel!
     @IBOutlet weak var Option1Button: UIButton!
@@ -46,34 +46,21 @@ class ViewController: UIViewController {
     
     func displayQuestion()
     {
-        while alreadyAskedQuestion
-        {
-            questionNumber = newGame.getQuestionNumber()
-            
-            alreadyAskedQuestion = false
-            
-            for questionsAsked in alreadyAskedQuestionArray
-            {
-                if questionsAsked == questionNumber
-                {
-                    alreadyAskedQuestion = true
-                }
-            }
-        }
-        
-        alreadyAskedQuestionArray.append(questionNumber)
-        alreadyAskedQuestion = true
+
+        questionNumber = newGame.getQuestionNumber()
         
         questionField.text = newGame.getQuestion(questionNumber: questionNumber)
         
         questionOptions = newGame.getOptions(questionNumber: questionNumber)
         
-        playAgainButton.isHidden = true
-        
         Option1Button.setTitle(questionOptions[0], for: UIControlState.normal)
         Option2Button.setTitle(questionOptions[1], for: UIControlState.normal)
         Option3Button.setTitle(questionOptions[2], for: UIControlState.normal)
         Option4Button.setTitle(questionOptions[3], for: UIControlState.normal)
+        
+        playAgainButton.isHidden = true
+        
+        
     }
     
     func displayScore()
@@ -103,40 +90,48 @@ class ViewController: UIViewController {
             {
                 newGame.incrementCorrectAnswer()
                 questionField.text = "Correct!"
+                playCorrectAnswerSound()
             }
             else
             {
                 questionField.text = "Sorry, wrong answer!"
+                playWrongAnswerSound()
             }
         case Option2Button:
             if newGame.getAnswer(questionNumber: questionNumber) == "2"
             {
                 newGame.incrementCorrectAnswer()
                 questionField.text = "Correct!"
+                playCorrectAnswerSound()
             }
             else
             {
                 questionField.text = "Sorry, wrong answer!"
+                playWrongAnswerSound()
             }
         case Option3Button:
             if newGame.getAnswer(questionNumber: questionNumber) == "3"
             {
                 newGame.incrementCorrectAnswer()
                 questionField.text = "Correct!"
+                playCorrectAnswerSound()
             }
             else
             {
                 questionField.text = "Sorry, wrong answer!"
+                playWrongAnswerSound()
             }
         case Option4Button:
             if newGame.getAnswer(questionNumber: questionNumber) == "4"
             {
                 newGame.incrementCorrectAnswer()
                 questionField.text = "Correct!"
+                playCorrectAnswerSound()
             }
             else
             {
                 questionField.text = "Sorry, wrong answer!"
+                playWrongAnswerSound()
             }
         default:
             break
@@ -168,7 +163,6 @@ class ViewController: UIViewController {
         Option4Button.isHidden = false
         
         newGame = TriviaGame()
-        alreadyAskedQuestionArray = []
         nextRound()
     }
     
@@ -192,14 +186,32 @@ class ViewController: UIViewController {
     
     func loadGameStartSound()
     {
-        let pathToSoundFile = Bundle.main.path(forResource: "GameSound", ofType: "wav")
-        let soundURL = URL(fileURLWithPath: pathToSoundFile!)
+        var pathToSoundFile = Bundle.main.path(forResource: "GameSound", ofType: "wav")
+        var soundURL = URL(fileURLWithPath: pathToSoundFile!)
         AudioServicesCreateSystemSoundID(soundURL as CFURL, &gameSound)
+        
+        pathToSoundFile = Bundle.main.path(forResource: "CorrectAnswer", ofType: "wav")
+        soundURL = URL(fileURLWithPath: pathToSoundFile!)
+        AudioServicesCreateSystemSoundID(soundURL as CFURL, &correctAnswerSound)
+        
+        pathToSoundFile = Bundle.main.path(forResource: "WrongAnswer", ofType: "wav")
+        soundURL = URL(fileURLWithPath: pathToSoundFile!)
+        AudioServicesCreateSystemSoundID(soundURL as CFURL, &wrongAnswerSound)
     }
     
     func playGameStartSound()
     {
         AudioServicesPlaySystemSound(gameSound)
+    }
+    
+    func playCorrectAnswerSound()
+    {
+        AudioServicesPlaySystemSound(correctAnswerSound)
+    }
+    
+    func playWrongAnswerSound()
+    {
+        AudioServicesPlaySystemSound(wrongAnswerSound)
     }
 }
 
