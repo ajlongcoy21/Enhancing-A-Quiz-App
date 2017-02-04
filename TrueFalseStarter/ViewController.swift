@@ -94,8 +94,8 @@ class ViewController: UIViewController {
             }
             else
             {
-                questionField.text = "Sorry, wrong answer!"
                 playWrongAnswerSound()
+                questionField.text = "Sorry, wrong answer!"
             }
         case Option2Button:
             if newGame.getAnswer(questionNumber: questionNumber) == "2"
@@ -106,8 +106,8 @@ class ViewController: UIViewController {
             }
             else
             {
-                questionField.text = "Sorry, wrong answer!"
                 playWrongAnswerSound()
+                questionField.text = "Sorry, wrong answer!"
             }
         case Option3Button:
             if newGame.getAnswer(questionNumber: questionNumber) == "3"
@@ -118,8 +118,8 @@ class ViewController: UIViewController {
             }
             else
             {
-                questionField.text = "Sorry, wrong answer!"
                 playWrongAnswerSound()
+                questionField.text = "Sorry, wrong answer!"
             }
         case Option4Button:
             if newGame.getAnswer(questionNumber: questionNumber) == "4"
@@ -130,8 +130,8 @@ class ViewController: UIViewController {
             }
             else
             {
-                questionField.text = "Sorry, wrong answer!"
                 playWrongAnswerSound()
+                questionField.text = "Sorry, wrong answer!"
             }
         default:
             break
