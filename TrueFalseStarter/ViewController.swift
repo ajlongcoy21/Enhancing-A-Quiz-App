@@ -353,6 +353,15 @@ class ViewController: UIViewController
         }
     }
     
+    /*------------------------------------------------------------------------------
+     unhighlightAnswers
+     
+     Arguments: None
+     Returns: None
+     
+     unhighlights the answers showing the selection that the player chose
+     ------------------------------------------------------------------------------*/
+    
     func unhighlightAnswers()
     {
         // Make less visible the other options the user did not choose
@@ -363,6 +372,15 @@ class ViewController: UIViewController
         Option4Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
     }
     
+    /*------------------------------------------------------------------------------
+     highlightCorrectAnswer
+     
+     Arguments: None
+     Returns: None
+     
+     highlights the correct answer if the player answered incorrectly
+     ------------------------------------------------------------------------------*/
+
     func highlightCorrectAnswer()
     {
         let correctAnswer = newGame.getAnswer(questionNumber: questionNumber)
