@@ -150,11 +150,9 @@ class ViewController: UIViewController
                 
                 playCorrectAnswerSound()
                 
-                // Make less visible the other options the user did not choose
+                unhighlightAnswers()
                 
-                Option2Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
-                Option3Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
-                Option4Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option1Button.setTitleColor(UIColor.white, for: UIControlState.normal)
 
             }
             else
@@ -169,11 +167,10 @@ class ViewController: UIViewController
                 answerField.text = "Sorry, that's not it."
                 answerField.textColor = UIColor.orange
                 
-                // Make less visible the other options the user did not choose
+                unhighlightAnswers()
+                highlightCorrectAnswer()
                 
-                Option2Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
-                Option3Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
-                Option4Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option1Button.setTitleColor(UIColor.white, for: UIControlState.normal)
             }
         case Option2Button: // Player selected answer 2
             
@@ -195,11 +192,10 @@ class ViewController: UIViewController
                 
                 playCorrectAnswerSound()
                 
-                // Make less visible the other options the user did not choose
+                unhighlightAnswers()
                 
-                Option1Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
-                Option3Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
-                Option4Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option2Button.setTitleColor(UIColor.white, for: UIControlState.normal)
+                
             }
             else
             {
@@ -213,11 +209,11 @@ class ViewController: UIViewController
                 answerField.text = "Sorry, that's not it."
                 answerField.textColor = UIColor.orange
                 
-                // Make less visible the other options the user did not choose
+                unhighlightAnswers()
+                highlightCorrectAnswer()
                 
-                Option1Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
-                Option3Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
-                Option4Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option2Button.setTitleColor(UIColor.white, for: UIControlState.normal)
+                
             }
         case Option3Button: // Player selected answer 2
             
@@ -237,11 +233,9 @@ class ViewController: UIViewController
                 
                 playCorrectAnswerSound()
                 
-                // Make less visible the other options the user did not choose
+                unhighlightAnswers()
                 
-                Option1Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
-                Option2Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
-                Option4Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option3Button.setTitleColor(UIColor.white, for: UIControlState.normal)
             }
             else
             {
@@ -255,11 +249,11 @@ class ViewController: UIViewController
                 answerField.text = "Sorry, that's not it."
                 answerField.textColor = UIColor.orange
                 
-                // Make less visible the other options the user did not choose
+                unhighlightAnswers()
+                highlightCorrectAnswer()
                 
-                Option1Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
-                Option2Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
-                Option4Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option3Button.setTitleColor(UIColor.white, for: UIControlState.normal)
+                
             }
         case Option4Button: // Player selected answer 2
             
@@ -280,11 +274,9 @@ class ViewController: UIViewController
                 
                 playCorrectAnswerSound()
                 
-                // Make less visible the other options the user did not choose
+                unhighlightAnswers()
                 
-                Option1Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
-                Option2Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
-                Option3Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option4Button.setTitleColor(UIColor.white, for: UIControlState.normal)
             }
             else
             {
@@ -298,11 +290,10 @@ class ViewController: UIViewController
                 answerField.text = "Sorry, that's not it."
                 answerField.textColor = UIColor.orange
                 
-                // Make less visible the other options the user did not choose
+                unhighlightAnswers()
+                highlightCorrectAnswer()
                 
-                Option1Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
-                Option2Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
-                Option3Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+                Option4Button.setTitleColor(UIColor.white, for: UIControlState.normal)
             }
             
         default:
@@ -359,6 +350,36 @@ class ViewController: UIViewController
         DispatchQueue.main.asyncAfter(deadline: dispatchTime)
         {
             self.nextRound()
+        }
+    }
+    
+    func unhighlightAnswers()
+    {
+        // Make less visible the other options the user did not choose
+        
+        Option1Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+        Option2Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+        Option3Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+        Option4Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 255.0, alpha: 0.2), for: UIControlState.normal)
+    }
+    
+    func highlightCorrectAnswer()
+    {
+        let correctAnswer = newGame.getAnswer(questionNumber: questionNumber)
+        
+        switch correctAnswer
+        {
+            case "1": Option1Button.setTitleColor(UIColor.init(red: 255.0, green: 0.0, blue: 0.0, alpha: 1.0), for: UIControlState.normal)
+            
+            case "2": Option2Button.setTitleColor(UIColor.init(red: 255.0, green: 0.0, blue: 0.0, alpha: 1.0), for: UIControlState.normal)
+            
+            case "3": Option3Button.setTitleColor(UIColor.init(red: 255.0, green: 0.0, blue: 0.0, alpha: 1.0), for: UIControlState.normal)
+            
+            case "4": Option4Button.setTitleColor(UIColor.init(red: 255.0, green: 0.0, blue: 0.0, alpha: 1.0), for: UIControlState.normal)
+            
+        default:
+            break
+            
         }
     }
     
