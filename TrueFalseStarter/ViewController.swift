@@ -81,6 +81,10 @@ class ViewController: UIViewController
         
         questionOptions = newGame.getOptions(questionNumber: questionNumber)  // Obtain the answer options related to the question
         
+        // Enable buttons
+        
+        enableButtons()
+        
         // Setup Buttons attributes to the starting condition for the question
         
         Option1Button.setTitleColor(UIColor.white, for: UIControlState.normal)
@@ -125,6 +129,10 @@ class ViewController: UIViewController
         // Increment the questions asked counter
         
         newGame.incrementQuestionsAsked()
+        
+        // Disable buttons
+        
+        disableButtons()
         
         // Check which button option was clicked
         
@@ -387,18 +395,52 @@ class ViewController: UIViewController
         
         switch correctAnswer
         {
-            case "1": Option1Button.setTitleColor(UIColor.init(red: 255.0, green: 0.0, blue: 0.0, alpha: 1.0), for: UIControlState.normal)
+            case "1": Option1Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 0.0, alpha: 1.0), for: UIControlState.normal)
             
-            case "2": Option2Button.setTitleColor(UIColor.init(red: 255.0, green: 0.0, blue: 0.0, alpha: 1.0), for: UIControlState.normal)
+            case "2": Option2Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 0.0, alpha: 1.0), for: UIControlState.normal)
             
-            case "3": Option3Button.setTitleColor(UIColor.init(red: 255.0, green: 0.0, blue: 0.0, alpha: 1.0), for: UIControlState.normal)
+            case "3": Option3Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 0.0, alpha: 1.0), for: UIControlState.normal)
             
-            case "4": Option4Button.setTitleColor(UIColor.init(red: 255.0, green: 0.0, blue: 0.0, alpha: 1.0), for: UIControlState.normal)
+            case "4": Option4Button.setTitleColor(UIColor.init(red: 0.0, green: 255.0, blue: 0.0, alpha: 1.0), for: UIControlState.normal)
             
         default:
             break
             
         }
+    }
+    
+    /*------------------------------------------------------------------------------
+     disableButtons
+     
+     Arguments: None
+     Returns: None
+     
+     diables the buttons so the user is not able to push them inbetween questions
+     ------------------------------------------------------------------------------*/
+    
+    func disableButtons()
+    {
+        Option1Button.isUserInteractionEnabled = false
+        Option2Button.isUserInteractionEnabled = false
+        Option3Button.isUserInteractionEnabled = false
+        Option4Button.isUserInteractionEnabled = false
+    }
+    
+    /*------------------------------------------------------------------------------
+     enableButtons
+     
+     Arguments: None
+     Returns: None
+     
+     enables the buttons so the user can answer questions
+     ------------------------------------------------------------------------------*/
+    
+    func enableButtons()
+    {
+        Option1Button.isUserInteractionEnabled = true
+        Option2Button.isUserInteractionEnabled = true
+        Option3Button.isUserInteractionEnabled = true
+        Option4Button.isUserInteractionEnabled = true
     }
     
     func loadGameStartSound()
