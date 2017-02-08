@@ -218,6 +218,7 @@ class ViewController: UIViewController
                 answerField.textColor = UIColor.orange
                 
                 unhighlightAnswers()
+                
                 highlightCorrectAnswer()
                 
                 Option2Button.setTitleColor(UIColor.white, for: UIControlState.normal)
